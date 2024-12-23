@@ -3,13 +3,13 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'; // Corrected th
 import Home from './pages/Home';
 import About from './pages/About';
 import Signin from './pages/Signin';
-import Signout from './pages/Signup';
 import Profile from './pages/Profile';
 import Signup from './pages/Signup';
-
+import Header from './components/Header';
 function App() {
   return (
     <BrowserRouter> {/* Corrected component name */}
+    <Header/>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
