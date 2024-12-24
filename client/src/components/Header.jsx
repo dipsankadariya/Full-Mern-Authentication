@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 
 function Header() {
   return (
-    <div className="bg-black text-white">
+    <div className=" text-black">
       <div className="flex justify-between items-center max-w-6xl mx-auto py-6 px-3">
-        <h1 className="font-semibold text-white text-lg">
+        <h1 className="font-semibold text-Black text-lg">
           MERN Auth Boilerplate
         </h1>
         <ul className="flex gap-6 text-lg">
