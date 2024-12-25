@@ -30,12 +30,12 @@ function Signup() {
       setLoading(false);
 
       if (res.ok && data.success) {
-        // Signup was successful
+        
         setSuccess(true);
-        setFormData({}); // Clear the form
-        setError(''); // Clear any previous error message
+        setFormData({});
+        setError(''); 
       } else {
-        // Signup failed
+       
         setSuccess(false);
         setError(data.message || 'Something went wrong. Please try again.');
       }
