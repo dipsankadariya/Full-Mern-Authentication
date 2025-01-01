@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { signInStart, signInFailure, signInSuccess } from '../redux/user/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 function Signin() {
   const [formData, setFormData] = useState({});
-  const [message, setMessage] = useState('');
+  const { loading, error } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -12,7 +15,9 @@ function Signin() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
+      dispatch(signInStart());
       const response = await fetch('/api/auth/signin', {
         method: 'POST',
         headers: {
@@ -20,23 +25,25 @@ function Signin() {
         },
         body: JSON.stringify(formData),
       });
+
       const data = await response.json();
+
       if (!response.ok) {
-        setMessage(data.message || 'Invalid credentials');
-        setTimeout(() => setMessage(''), 4000);
+        dispatch(signInFailure(data.message || 'Invalid credentials'));
         return;
       }
+
+      dispatch(signInSuccess(data));
       navigate('/');
-    } catch (error) {
-      setMessage('Something went wrong. Please try again.');
-      setTimeout(() => setMessage(''), 4000);
+    } catch (err) {
+      dispatch(signInFailure('Something went wrong. Please try again.'));
     }
   };
 
   return (
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="font-bold text-3xl text-center my-8">Sign In</h1>
-      {message && <p className="text-red-500 text-center mb-4">{message}</p>}
+      {error && <p className="text-red-400 text-lg mt-4">{error}</p>}
       <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
         <input
           type="text"
@@ -54,8 +61,12 @@ function Signin() {
           onChange={handleChange}
           className="bg-gray-200 rounded-lg p-3 text-left text-lg"
         />
-        <button type="submit" className="bg-black py-3 text-white text-lg hover:opacity-70">
-          Sign In
+        <button
+          type="submit"
+          disabled={loading}
+          className="bg-black py-3 text-white text-lg hover:opacity-70 disabled:opacity-40"
+        >
+          {loading ? 'Loading...' : 'Sign In'}
         </button>
       </form>
       <div className="flex gap-2 mt-4 text-lg">
