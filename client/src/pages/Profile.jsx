@@ -79,6 +79,7 @@ function Profile() {
   return (
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="font-bold text-3xl text-center my-8">Profile</h1>
+      <h2 className='font-xl text-xl text-center my-8'>You can update your username , email , passowrd here.</h2>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input type="file" ref={fileRef} hidden accept="image/*" />
         <div className="flex justify-center mb-4">
@@ -108,7 +109,7 @@ function Profile() {
         <input
           type="password"
           id="password"
-          placeholder="Update Password"
+          placeholder="New Password"
           className="bg-gray-200 rounded-lg p-3 text-left text-lg"
           onChange={handleChange}
         />
