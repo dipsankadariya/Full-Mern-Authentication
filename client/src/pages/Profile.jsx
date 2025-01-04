@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateUserFailure, updateUserSucess, updateUserStart } from '../redux/user/userSlice';
-
+import { deleteUserStart,deleteUserFailure,deleteUserSucess } from '../redux/user/userSlice';
 function Profile() {
   const fileRef = useRef(null);
   const { currentUser } = useSelector((state) => state.user);
@@ -46,6 +46,23 @@ function Profile() {
       setLoading(false);
     }
   };
+  const handleDeleteAccount= async()=>{
+  try{
+    dispatch(deleteUserStart());
+    const response = await fetch(`/api/user/delete/${currentUser._id}`, {
+      method: 'DELETE',
+  });
+  const data = await response.json();
+  if(data.success===false){
+    dispatch(deleteUserFailure());
+    return;
+  }
+  dispatch(deleteUserSucess());
+}
+  catch(error){
+    dispatch(deleteUserFailure());
+  }
+  }
 
   return (
     <div className="p-3 max-w-lg mx-auto">
@@ -94,7 +111,7 @@ function Profile() {
       {error && <p className="text-red-500 mt-2">{error}</p>}
       {success && <p className="text-green-500 mt-2">Profile updated successfully!</p>}
       <div className="flex justify-between mt-6 text-lg">
-        <button className="text-red-500 font-bold hover:opacity-70">
+        <button onClick={handleDeleteAccount} className="text-red-500 font-bold hover:opacity-70">
           Delete Account
         </button>
         <button className="text-blue-500 font-bold hover:opacity-70">
