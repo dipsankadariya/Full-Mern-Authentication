@@ -4,6 +4,7 @@ export default function Home() {
   return (
     <div className='px-4 py-12 max-w-2xl mx-auto'>
       <h1 className='text-3xl font-bold mb-4 text-slate-800'>Home</h1>
+      <h2 className='text-xl font-bold mb-4 text-slate-800'>Try out the Authentication through the signin Page</h2>
       <p className='mb-4 text-slate-700'>
         This application is built with the MERN stack (MongoDB, Express, React, Node.js) and provides secure authentication. Users can sign up, sign in, update their profile, log out, and delete their account. Sessions are managed using JWT tokens stored in secure, HTTP-only cookies. Google OAuth is also integrated for easy sign-in with Google accounts.
       </p>
