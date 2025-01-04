@@ -4,7 +4,9 @@ import { useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateUserFailure, updateUserSucess, updateUserStart } from '../redux/user/userSlice';
 import { deleteUserStart,deleteUserFailure,deleteUserSucess } from '../redux/user/userSlice';
+import { signOut } from '../redux/user/userSlice';
 function Profile() {
+
   const fileRef = useRef(null);
   const { currentUser } = useSelector((state) => state.user);
   const [formData, setFormData] = useState({});
@@ -64,6 +66,16 @@ function Profile() {
   }
   }
 
+  const  handleSignOut =async()=>{
+    try{
+       await fetch('api/user/signout',);
+       dispatch(signOut());
+    }
+    catch(error){
+     console.log(error);
+    }
+ }
+
   return (
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="font-bold text-3xl text-center my-8">Profile</h1>
@@ -114,7 +126,7 @@ function Profile() {
         <button onClick={handleDeleteAccount} className="text-red-500 font-bold hover:opacity-70">
           Delete Account
         </button>
-        <button className="text-blue-500 font-bold hover:opacity-70">
+        <button  onClick={handleSignOut} className="text-blue-500 font-bold hover:opacity-70">
           Sign Out
         </button>
       </div>
